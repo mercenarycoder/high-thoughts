@@ -1,8 +1,33 @@
 name: hello-world
-on: push
+on: 
+  push:
+    branches:
+      - main
+        dev
+  pull_request:
+    branches:
+      - main
+        dev
+
 jobs:
   my-job:
     runs-on: ubuntu-latest
     steps:
       - name: my-step
         run: echo "hello world!"
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
